@@ -1,5 +1,3 @@
-import './App.css';
-
 function App() {
   return <div>Repo Radar</div>;
 }

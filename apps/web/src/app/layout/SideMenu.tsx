@@ -6,11 +6,13 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Typography,
 } from '@mui/material';
 import { NavLink } from 'react-router';
+
 import { appRoutes } from '../router/appRoutes';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 export function SideMenu() {
   return (
@@ -22,12 +24,17 @@ export function SideMenu() {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
+          borderRightColor: 'divider',
         },
       }}
     >
-      <Toolbar />
+      <Toolbar>
+        <Typography variant='subtitle1' sx={{ fontWeight: 700 }}>
+          Repo Radar
+        </Typography>
+      </Toolbar>
 
-      <Box sx={{ overflow: 'auto' }}>
+      <Box sx={{ px: 1.5, py: 1 }}>
         <List>
           {appRoutes.map((route) => (
             <ListItemButton
@@ -35,12 +42,23 @@ export function SideMenu() {
               component={NavLink}
               to={route.path}
               sx={{
+                borderRadius: 2,
+                mb: 0.5,
+
                 '&.active': {
                   bgcolor: 'action.selected',
+                  color: 'primary.main',
                 },
               }}
             >
-              <ListItemIcon>{route.handle.nav.icon}</ListItemIcon>
+              <ListItemIcon
+                sx={{
+                  minWidth: 40,
+                  color: 'inherit',
+                }}
+              >
+                {route.handle.nav.icon}
+              </ListItemIcon>
 
               <ListItemText primary={route.handle.nav.label} />
             </ListItemButton>

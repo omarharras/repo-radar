@@ -18,7 +18,7 @@ export function AppLayout() {
       >
         <Toolbar />
 
-        <Container maxWidth='lg' sx={{ p: 3 }}>
+        <Container maxWidth='lg' sx={{ py: 4 }}>
           <Outlet />
         </Container>
       </Box>

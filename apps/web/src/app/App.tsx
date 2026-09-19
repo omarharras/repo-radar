@@ -1,5 +1,8 @@
+import { RouterProvider } from 'react-router';
+import { router } from './router/router';
+
 function App() {
-  return <div>Repo Radar</div>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

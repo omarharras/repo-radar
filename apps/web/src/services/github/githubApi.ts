@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Repository } from '../../shared/types/repository';
-import type { GitHubSearchRepositoriesResponse } from './githubTypes';
+import type {
+  GitHubSearchRepositoriesResponse,
+  GitHubRepository,
+  GitHubCommit,
+} from './githubTypes';
 import { mapGitHubRepository } from './githubMappers';
 
 type RepositorySearchPage = {
@@ -49,7 +53,32 @@ export const githubApi = createApi({
         totalCount: response.total_count,
       }),
     }),
+
+    getRepository: builder.query<Repository, string>({
+      query: (fullName) => ({
+        url: `repos/${fullName}`,
+      }),
+
+      transformResponse: (response: GitHubRepository) =>
+        mapGitHubRepository(response),
+    }),
+
+    getLatestCommit: builder.query<string | null, number>({
+      query: (repositoryId) => ({
+        url: `repositories/${repositoryId}/commits`,
+        params: {
+          per_page: 1,
+        },
+      }),
+
+      transformResponse: (response: GitHubCommit[]) =>
+        response[0]?.commit.committer.date ?? null,
+    }),
   }),
 });
 
-export const { useSearchRepositoriesInfiniteQuery } = githubApi;
+export const {
+  useSearchRepositoriesInfiniteQuery,
+  useGetRepositoryQuery,
+  useGetLatestCommitQuery,
+} = githubApi;

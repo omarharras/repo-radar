@@ -9,7 +9,7 @@ type RepositoriesListProps = {
 
 export function RepositoriesList({ repositories }: RepositoriesListProps) {
   return (
-    <Stack>
+    <Stack spacing={2}>
       {repositories.map((repository) => (
         <RepositoryItem key={repository.id} repository={repository} />
       ))}

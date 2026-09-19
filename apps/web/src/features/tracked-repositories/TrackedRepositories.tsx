@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography, Paper } from '@mui/material';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { trackedReposSelectors } from './trackedRepositoriesSlice';
@@ -38,12 +38,12 @@ export function TrackedRepositories() {
   };
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={4}>
       <Stack
         direction='row'
         sx={{
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}
       >
         <Stack spacing={0.75}>
@@ -64,11 +64,48 @@ export function TrackedRepositories() {
           {isRefreshingAll ? 'Refreshing...' : 'Refresh All'}
         </Button>
       </Stack>
-      <TrackedRepositoriesChart />
+
+      {trackedRepositories.length > 0 && (
+        <Paper
+          variant='outlined'
+          sx={{
+            p: 3,
+            borderRadius: 3,
+          }}
+        >
+          <Stack spacing={2}>
+            <Stack spacing={0.5}>
+              <Typography variant='h6' sx={{ fontWeight: 600 }}>
+                Stars by repository
+              </Typography>
+
+              <Typography variant='body2' color='text.secondary'>
+                Compare GitHub stars across your tracked repositories.
+              </Typography>
+            </Stack>
+
+            <TrackedRepositoriesChart />
+          </Stack>
+        </Paper>
+      )}
+
       {trackedRepositories.length === 0 ? (
-        <Typography color='text.secondary'>
-          You are not tracking any repositories yet.
-        </Typography>
+        <Paper
+          variant='outlined'
+          sx={{
+            p: 4,
+            borderRadius: 3,
+            textAlign: 'center',
+          }}
+        >
+          <Stack spacing={1}>
+            <Typography variant='h6'>No tracked repositories yet</Typography>
+
+            <Typography color='text.secondary'>
+              Track repositories from the search page to monitor them here.
+            </Typography>
+          </Stack>
+        </Paper>
       ) : (
         <Stack spacing={2}>
           {trackedRepositories.map((repository) => (

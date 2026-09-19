@@ -1,4 +1,15 @@
-import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+
+import {
+  Chip,
+  Link,
+  Stack,
+  Typography,
+  IconButton,
+  Paper,
+  Tooltip,
+} from '@mui/material';
 
 import type { Repository } from '../../../shared/types/repository';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -35,11 +46,10 @@ export function RepositoryItem({ repository }: RepositoryItemProps) {
   };
 
   return (
-    <Box
+    <Paper
       sx={{
-        py: 2,
-        borderBottom: 1,
-        borderColor: 'divider',
+        p: 2.5,
+        borderRadius: 3,
       }}
     >
       <Stack
@@ -57,36 +67,56 @@ export function RepositoryItem({ repository }: RepositoryItemProps) {
             rel='noopener noreferrer'
             underline='hover'
             variant='h6'
+            sx={{ fontWeight: 600 }}
           >
             {repository.fullName}
           </Link>
 
           {repository.description && (
-            <Typography color='text.secondary'>
+            <Typography variant='body2' color='text.secondary'>
               {repository.description}
             </Typography>
           )}
 
-          <Stack direction='row' spacing={1}>
+          <Stack
+            direction='row'
+            spacing={1}
+            sx={{
+              flexWrap: 'wrap',
+              rowGap: 1,
+            }}
+          >
             <Chip
               size='small'
-              label={`★ ${repository.stars.toLocaleString()}`}
+              label={`Stars ${repository.stars.toLocaleString()}`}
             />
 
             <Chip
               size='small'
-              label={`Issues ${repository.openIssues.toLocaleString()}`}
+              label={`Open issues ${repository.openIssues.toLocaleString()}`}
             />
           </Stack>
         </Stack>
 
-        <Button
-          variant={isTracked ? 'outlined' : 'contained'}
-          onClick={handleTrackToggle}
-        >
-          {isTracked ? 'Untrack' : 'Track'}
-        </Button>
+        <Tooltip title={isTracked ? 'Untrack repository' : 'Track repository'}>
+          <IconButton
+            size='small'
+            onClick={handleTrackToggle}
+            aria-label={isTracked ? 'Untrack repository' : 'Track repository'}
+            sx={{
+              border: 1,
+              borderColor: isTracked ? 'error.main' : 'primary.main',
+              color: isTracked ? 'error.main' : 'primary.main',
+            }}
+          >
+            {isTracked ? (
+              <CloseIcon fontSize='small' />
+            ) : (
+              <AddIcon fontSize='small' />
+            )}
+          </IconButton>
+        </Tooltip>
       </Stack>
-    </Box>
+    </Paper>
   );
 }

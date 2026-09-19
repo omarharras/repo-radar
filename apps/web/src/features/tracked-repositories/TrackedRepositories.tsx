@@ -5,6 +5,7 @@ import { trackedReposSelectors } from './trackedRepositoriesSlice';
 import { TrackedRepositoryItem } from './components/TrackedRepositoryItem';
 import { githubApi } from '../../services/github/githubApi';
 import { useState } from 'react';
+import { TrackedRepositoriesChart } from './components/TrackedRepositoriesChart';
 
 export function TrackedRepositories() {
   const trackedRepositories = useAppSelector(trackedReposSelectors.selectAll);
@@ -63,6 +64,7 @@ export function TrackedRepositories() {
           {isRefreshingAll ? 'Refreshing...' : 'Refresh All'}
         </Button>
       </Stack>
+      <TrackedRepositoriesChart />
       {trackedRepositories.length === 0 ? (
         <Typography color='text.secondary'>
           You are not tracking any repositories yet.

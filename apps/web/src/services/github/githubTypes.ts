@@ -13,3 +13,11 @@ export type GitHubSearchRepositoriesResponse = {
   incomplete_results: boolean;
   items: GitHubRepository[];
 };
+
+export type GitHubCommit = {
+  commit: {
+    committer: {
+      date: string;
+    };
+  };
+};

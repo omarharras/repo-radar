@@ -5,7 +5,7 @@ import type { PropsWithChildren } from 'react';
 
 export function AppThemeProvider({ children }: PropsWithChildren) {
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={appTheme} defaultMode='light'>
       <CssBaseline />
       {children}
     </ThemeProvider>

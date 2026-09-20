@@ -11,9 +11,10 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 
 const drawerWidth = 300;
 export function AppNavbar() {
-  const { mode, setMode } = useColorScheme();
+  const { mode, systemMode, setMode } = useColorScheme();
 
-  const isDarkMode = mode === 'dark';
+  const resolvedMode = mode === 'system' ? systemMode : mode;
+  const isDarkMode = resolvedMode === 'dark';
 
   const handleToggleTheme = () => {
     setMode(isDarkMode ? 'light' : 'dark');

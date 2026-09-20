@@ -132,7 +132,7 @@ The tracked repositories feature derives chart data directly from existing RTK Q
 
 ## Assumptions and Limitations
 
-- GitHub's public REST API is used without authentication, so requests are subject to unauthenticated rate limits.
+- - GitHub's public REST API is used without authentication, so requests are subject to GitHub's unauthenticated rate limit of 60 requests per hour per IP address.
 - A complete tracked repository refresh requires separate requests for repository details and latest commit data.
 - GitHub repository search exposes at most the first 1,000 matching results.
 - Tracked repositories are persisted locally in the browser; there is no backend or cross-device synchronization.
@@ -145,4 +145,4 @@ The application is deployed on Vercel.
 
 A SPA fallback rewrite allows client-side routes such as `/search` and `/tracked` to work correctly when opened directly or refreshed.
 
-**Live Demo:** _To be added after deployment._
+**Live Demo:** https://repo-radar-web-sandy.vercel.app

@@ -12,6 +12,9 @@ type RepositorySearchPage = {
   totalCount: number;
 };
 
+const GITHUB_SEARCH_RESULTS_LIMIT = 1000;
+const SEARCH_REPOSITORIES_PER_PAGE = 10;
+
 export const githubApi = createApi({
   reducerPath: 'githubApi',
 
@@ -26,11 +29,15 @@ export const githubApi = createApi({
       infiniteQueryOptions: {
         initialPageParam: 1,
         getNextPageParam(lastPage, allPages, lastPageParam) {
+          const searchableItemsCount = Math.min(
+            lastPage.totalCount,
+            GITHUB_SEARCH_RESULTS_LIMIT,
+          );
           const loadedItemsCount = allPages.reduce(
             (total, page) => total + page.items.length,
             0,
           );
-          if (loadedItemsCount >= lastPage.totalCount) {
+          if (loadedItemsCount >= searchableItemsCount) {
             return undefined;
           }
           return lastPageParam + 1;
@@ -42,7 +49,7 @@ export const githubApi = createApi({
         params: {
           q: queryArg,
           page: pageParam,
-          per_page: 10,
+          per_page: SEARCH_REPOSITORIES_PER_PAGE,
         },
       }),
 
